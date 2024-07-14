@@ -9,12 +9,38 @@ export class Human extends Model {
     return this.toJSON();
   }
 
-  getFullName() {
-    // TODO: Implement this method
+  async getFullName() {
+    const humans = await Human.findAll();
+    console.log(humans.fname + " " + humans.lname); // true
   }
+
 }
 
-// TODO: Human.init()
+Human.init(
+  {
+    humanId: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    fname: {
+      type: DataTypes.VARCHAR(30),
+      allowNull: false
+    },
+    lname: {
+      type: DataTypes.VARCHAR(30),
+      allowNull: false
+    },
+    email: {
+      type: DataTypes.VARCHAR(30),
+      allowNull: false,
+    },
+  },
+  {
+    modelName: 'human',
+    sequelize: db,
+  },
+);
 
 export class Animal extends Model {
   [util.inspect.custom]() {
@@ -22,8 +48,35 @@ export class Animal extends Model {
   }
 }
 
-// TODO: Animal.init()
+Animal.init(
+  {
+    animalId: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    name: {
+      type: DataTypes.VARCHAR(30),
+      allowNull: false,
+    },
+    species: {
+      type: DataTypes.VARCHAR(30),
+      allowNull: false,
+    },
+    birthYear: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+  },
+  {
+    modelName: 'animal',
+    sequelize: db,
+  },
+);
 
-// TODO: Define Relationship
+Human.hasMany(Animal, { foreignKey: 'humanId' });
+Animal.belongsTo(Human, { foreignKey: 'humanId' });
 
 export default db;
+
+getFullName()
