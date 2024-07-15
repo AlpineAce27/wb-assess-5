@@ -24,15 +24,15 @@ Human.init(
       primaryKey: true,
     },
     fname: {
-      type: DataTypes.VARCHAR(30),
+      type: DataTypes.STRING(30),
       allowNull: false
     },
     lname: {
-      type: DataTypes.VARCHAR(30),
+      type: DataTypes.STRING(30),
       allowNull: false
     },
     email: {
-      type: DataTypes.VARCHAR(30),
+      type: DataTypes.STRING(30),
       allowNull: false,
     },
   },
@@ -56,11 +56,11 @@ Animal.init(
       primaryKey: true,
     },
     name: {
-      type: DataTypes.VARCHAR(30),
+      type: DataTypes.STRING(30),
       allowNull: false,
     },
     species: {
-      type: DataTypes.VARCHAR(30),
+      type: DataTypes.STRING(30),
       allowNull: false,
     },
     birthYear: {
@@ -78,5 +78,3 @@ Human.hasMany(Animal, { foreignKey: 'humanId' });
 Animal.belongsTo(Human, { foreignKey: 'humanId' });
 
 export default db;
-
-getFullName()
