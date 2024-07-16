@@ -12,10 +12,11 @@ export const query2 = Animal.findOne({
 });
 
 // 3 Get all animals belonging to the human with primary key 5
-// export const query3 = Animal.findAll({
-//     association: 'Human',
-//     where {Human.humanId : 5}
-// });
+export const query3 = Animal.findAll({
+    where: {
+        humanId: 5,
+    },
+});
 
 // 4 Get all animals born in a year greater than (but not equal to) 2015.
 export const query4 = Animal.findAll({
@@ -55,8 +56,30 @@ export const query8 = Human.findAll({
 // Continue reading the instructions before you move on!
 
 // Print a directory of humans and their animals
-export async function printHumansAndAnimals() {}
+export async function printHumansAndAnimals() {
+
+    const people = await Human.findAll({
+        include: {
+            model : Animal
+        }
+    
+    }) 
+    
+    people.forEach((person) => {
+        console.log(person.fname, person.lname)
+        person.animals.forEach((animal) => {
+            console.log("- " + animal.name + ", " + animal.species)
+        })
+    })
+}
 
 // Return a Set containing the full names of all humans
 // with animals of the given species.
-export async function getHumansByAnimalSpecies(species) {}
+export async function getHumansByAnimalSpecies(species) {
+    const people = await Human.findAll({
+        include: {
+            model : Animal
+        },
+
+    })
+}
