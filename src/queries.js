@@ -76,10 +76,20 @@ export async function printHumansAndAnimals() {
 // Return a Set containing the full names of all humans
 // with animals of the given species.
 export async function getHumansByAnimalSpecies(species) {
-    const people = await Human.findAll({
+    const animals = await Animal.findAll({
         include: {
-            model : Animal
+            model : Human
         },
+        where : {species : findSpecies}
+    }) 
+    const speciesOwners = new Set()
+    animals.forEach(async (animal) => {
 
+        let owner = await Human.findByPk(animal.humanId)
+        let ownerName = owner.fname + " " + owner.lname
+        speciesOwners.add(ownerName)
+        //console.log(animal.name, "the", animal.species, "owned by", ownerName)
     })
+    
+   return(speciesOwners)
 }
